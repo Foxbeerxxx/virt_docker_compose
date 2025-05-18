@@ -270,3 +270,24 @@ touch host_file.txt
 
 ![11](https://github.com/Foxbeerxxx/virt_docker_compose/blob/main/img/img11.png)
 
+8. `Для примера проверки еще подключусь на Deb контейнер`
+
+```
+alexey@dell:~/virt_docker_compose/custom-nginx$ docker exec -it debian-container bash -c "ls -l /data && cat /data/*"
+total 8
+-rw-rw-r-- 1 1000 1000 67 May 18 16:49 Dockerfile
+-rw-r--r-- 1 root root  0 May 18 19:17 centos_file.txt
+-rw-r--r-- 1 root root  0 May 18 19:20 debian_file.txt
+-rw-rw-r-- 1 1000 1000  0 May 18 19:22 host_file.txt
+-rw-rw-r-- 1 1000 1000 95 May 18 16:47 index.html
+FROM nginx:1.21.1
+COPY index.html /usr/share/nginx/html/index.html
+<html>
+<head>
+Hey, Netology
+</head>
+<body>
+<h1>I will be DevOps Engineer!</h1>
+</body>
+</html>
+```
