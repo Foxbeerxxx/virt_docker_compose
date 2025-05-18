@@ -232,22 +232,41 @@ custom-nginx-t2
 
 ### Задание 4
 
-`Приведите ответ в свободной форме........`
 
-1. `Заполните здесь этапы выполнения, если требуется ....`
-2. `Заполните здесь этапы выполнения, если требуется ....`
-3. `Заполните здесь этапы выполнения, если требуется ....`
-4. `Заполните здесь этапы выполнения, если требуется ....`
-5. `Заполните здесь этапы выполнения, если требуется ....`
-6. 
+1. `Запуск контейнера CentOS`
+```
+docker run -d -v $(pwd):/data --name centos-container centos:7 tail -f /dev/null
 
 ```
-Поле для вставки кода...
-....
-....
-....
-....
-```
+2. `Запуск контейнера Debian`
 
-`При необходимости прикрепитe сюда скриншоты
-![Название скриншота](ссылка на скриншот)`
+```
+docker run -d -v $(pwd):/data --name debian-container debian:11 tail -f /dev/null
+```
+3. `Проверяем запуск docker ps`
+```
+docker ps
+```
+![10](https://github.com/Foxbeerxxx/virt_docker_compose/blob/main/img/img10.png)
+
+4. `Создание файла в контейнере CentO, подключаюсь к нему`
+
+```
+docker exec -it centos-container bash 
+touch /data/centos_file.txt
+```
+5. `Такую же процедуру делаем на Debian`
+```
+docker exec -it debian-container bash 
+touch /data/debian_file.txt
+
+```
+6. `На Хостовой машине создаем файл.`
+
+```
+touch host_file.txt
+```
+7. `Как итог на хостовой машине видны файлы которые создавались на Deb и CentOs контейнерах`
+
+![11](https://github.com/Foxbeerxxx/virt_docker_compose/blob/main/img/img11.png)
+
