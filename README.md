@@ -67,34 +67,75 @@ https://hub.docker.com/repository/docker/foxbeer13/custom-nginx/general
 
 ---
 
-
-
-
-
-
 ### Задание 2
 
-`Приведите ответ в свободной форме........`
+1. `Запуск контейнера с указанными параметрами`
+```
+docker run --name tatatyncevaa-custom-nginx-t2 -d -p 127.0.0.1:8081:80 foxbeer13/custom-nginx:1.0.0
+```
+![5](https://github.com/Foxbeerxxx/virt_docker_compose/blob/main/img/img5.png)
 
-1. `Заполните здесь этапы выполнения, если требуется ....`
-2. `Заполните здесь этапы выполнения, если требуется ....`
-3. `Заполните здесь этапы выполнения, если требуется ....`
-4. `Заполните здесь этапы выполнения, если требуется ....`
-5. `Заполните здесь этапы выполнения, если требуется ....`
-6. 
+
+
+2. `Переименовать по команде`
 
 ```
-Поле для вставки кода...
-....
-....
-....
-....
+docker rename tatatincevaa-custom-nginx-t2 custom-nginx-t2
+```
+![6](https://github.com/Foxbeerxxx/virt_docker_compose/blob/main/img/img6.png)
+
+3. `Выполнение комплексной команды`
+```
+date +"%d-%m-%Y %T.%N %Z" ; sleep 0.150 ; docker ps ; ss -tlpn | grep 127.0.0.1:8081 ; docker logs custom-nginx-t2 -n1 ; docker exec -it custom-nginx-t2 base64 /usr/share/nginx/html/index.html
+
+```
+ `Вывод`
+
+```
+alexey@dell:~/virt_docker_compose/custom-nginx$ date +"%d-%m-%Y %T.%N %Z" ; sleep 0.150 ; docker ps ; ss -tlpn | grep 127.0.0.1:8081 ; docker logs custom-nginx-t2 -n1 ; docker exec -it custom-nginx-t2 base64 /usr/share/nginx/html/index.html
+18-05-2025 21:15:08.598334442 MSK
+CONTAINER ID   IMAGE                          COMMAND                  CREATED         STATUS         PORTS                    NAMES
+1654c7f7fe27   foxbeer13/custom-nginx:1.0.0   "/docker-entrypoint.…"   6 minutes ago   Up 6 minutes   127.0.0.1:8081->80/tcp   custom-nginx-t2
+LISTEN  0       4096              127.0.0.1:8081         0.0.0.0:*              
+172.17.0.1 - - [18/May/2025:18:14:10 +0000] "GET / HTTP/1.1" 200 95 "-" "curl/7.68.0" "-"
+PGh0bWw+CjxoZWFkPgpIZXksIE5ldG9sb2d5CjwvaGVhZD4KPGJvZHk+CjxoMT5JIHdpbGwgYmUg
+RGV2T3BzIEVuZ2luZWVyITwvaDE+CjwvYm9keT4KPC9odG1sPgo=
+
 ```
 
-`При необходимости прикрепитe сюда скриншоты
-![Название скриншота 2](ссылка на скриншот 2)`
-
-
+4. `Проверка доступности`
+```
+alexey@dell:~/virt_docker_compose/custom-nginx$ curl -v http://127.0.0.1:8081
+*   Trying 127.0.0.1:8081...
+* TCP_NODELAY set
+* Connected to 127.0.0.1 (127.0.0.1) port 8081 (#0)
+> GET / HTTP/1.1
+> Host: 127.0.0.1:8081
+> User-Agent: curl/7.68.0
+> Accept: */*
+> 
+* Mark bundle as not supporting multiuse
+< HTTP/1.1 200 OK
+< Server: nginx/1.21.1
+< Date: Sun, 18 May 2025 18:17:05 GMT
+< Content-Type: text/html
+< Content-Length: 95
+< Last-Modified: Sun, 18 May 2025 16:47:53 GMT
+< Connection: keep-alive
+< ETag: "682a0f39-5f"
+< Accept-Ranges: bytes
+< 
+<html>
+<head>
+Hey, Netology
+</head>
+<body>
+<h1>I will be DevOps Engineer!</h1>
+</body>
+</html>
+* Connection #0 to host 127.0.0.1 left intact
+```
+![7](https://github.com/Foxbeerxxx/virt_docker_compose/blob/main/img/img7.png)
 ---
 
 ### Задание 3
