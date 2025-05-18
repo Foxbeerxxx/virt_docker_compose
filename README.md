@@ -3,28 +3,74 @@
 
 ### Задание 1
 
-
-
-1. `Заполните здесь этапы выполнения, если требуется ....`
-2. `Заполните здесь этапы выполнения, если требуется ....`
-3. `Заполните здесь этапы выполнения, если требуется ....`
-4. `Заполните здесь этапы выполнения, если требуется ....`
-5. `Заполните здесь этапы выполнения, если требуется ....`
-6. 
+1. `Docker и Docker Compose у меня уже установлены на хостовой машине на Ubuntu.Проверяю версии:`
 
 ```
-Поле для вставки кода...
-....
-....
-....
-....
+alexey@dell:~$ docker compose version 
+Docker Compose version v2.18.1
+alexey@dell:~$ docker --version
+Docker version 24.0.2, build cb74dfc
+```
+2. `Работа с Docker Hub, захожу и создаю публиный репозиторий custom-nginx`
+3. `На хостовой машине создаю рабочую директорию`
+
+```
+mkdir custom-nginx && cd custom-nginx
+```
+4. `Создаю файл index.html с заданным содержимым:`
+```
+cat > index.html <<EOF
+<html>
+<head>
+Hey, Netology
+</head>
+<body>
+<h1>I will be DevOps Engineer!</h1>
+</body>
+</html>
+EOF
+```
+5. `Создаем Dockerfile`
+```
+cat > Dockerfile <<EOF
+FROM nginx:1.21.1
+COPY index.html /usr/share/nginx/html/index.html
+EOF
+```
+6. `Скачиваем базовый образ nginx:1.21.1`
+
+```
+docker pull nginx:1.21.1
+```
+7. `Собираю  образ, логинюсь в DockerHub и ПУШ в репозиторий.`
+
+![1](https://github.com/Foxbeerxxx/virt_docker_compose/blob/main/img/img1.png)
+![2](https://github.com/Foxbeerxxx/virt_docker_compose/blob/main/img/img2.png)
+
+8. `Запускаю контейнер из собранного образа и проверяю`
+```
+docker run -d -p 8081:80 foxbeer13/custom-nginx:1.0.0
+```
+![3](https://github.com/Foxbeerxxx/virt_docker_compose/blob/main/img/img3.png)
+
+```
+curl http://localhost:8081
 ```
 
-`При необходимости прикрепитe сюда скриншоты
-![Название скриншота 1](ссылка на скриншот 1)`
+![4](https://github.com/Foxbeerxxx/virt_docker_compose/blob/main/img/img4.png)
+
+```
+#Ссылка на репозиторий
+https://hub.docker.com/repository/docker/foxbeer13/custom-nginx/general
+```
 
 
 ---
+
+
+
+
+
 
 ### Задание 2
 
