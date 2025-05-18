@@ -140,25 +140,95 @@ Hey, Netology
 
 ### Задание 3
 
-`Приведите ответ в свободной форме........`
 
-1. `Заполните здесь этапы выполнения, если требуется ....`
-2. `Заполните здесь этапы выполнения, если требуется ....`
-3. `Заполните здесь этапы выполнения, если требуется ....`
-4. `Заполните здесь этапы выполнения, если требуется ....`
-5. `Заполните здесь этапы выполнения, если требуется ....`
-6. 
+1. `Подключение к стандартным потокам контейнера`
 
 ```
-Поле для вставки кода...
-....
-....
-....
-....
+alexey@dell:~/virt_docker_compose/custom-nginx$ docker attach custom-nginx-t2
+^C2025/05/18 18:31:07 [notice] 1#1: signal 2 (SIGINT) received, exiting
+2025/05/18 18:31:07 [notice] 32#32: exiting
+2025/05/18 18:31:07 [notice] 32#32: exit
+2025/05/18 18:31:07 [notice] 31#31: exiting
+2025/05/18 18:31:07 [notice] 31#31: exit
+2025/05/18 18:31:07 [notice] 1#1: signal 17 (SIGCHLD) received from 31
+2025/05/18 18:31:07 [notice] 1#1: worker process 31 exited with code 0
+2025/05/18 18:31:07 [notice] 1#1: signal 29 (SIGIO) received
+2025/05/18 18:31:07 [notice] 1#1: signal 17 (SIGCHLD) received from 32
+2025/05/18 18:31:07 [notice] 1#1: worker process 32 exited with code 0
+2025/05/18 18:31:07 [notice] 1#1: exit
+
+После нажатия Ctrl-C контейнер остановится, потому что:
+-Nginx запущен в foreground режиме (основной процесс контейнера)
+-Ctrl-C отправляет SIGINT сигнал основному процессу
+-При завершении основного процесса контейнер останавливается
+
+```
+![8](https://github.com/Foxbeerxxx/virt_docker_compose/blob/main/img/img8.png)
+
+2. `Перезапускаю контейнер и захожу в интерактивный режим`\
+```
+alexey@dell:~/virt_docker_compose/custom-nginx$ docker start custom-nginx-t2
+custom-nginx-t2
+alexey@dell:~/virt_docker_compose/custom-nginx$ docker exec -it custom-nginx-t2 bash
+root@1654c7f7fe27:/# 
 ```
 
-`При необходимости прикрепитe сюда скриншоты
-![Название скриншота](ссылка на скриншот)`
+3. `Ставлю nano для редактирования conf файла`
+```
+apt-get update && apt-get install -y nano
+nano /etc/nginx/conf.d/default.conf
+```
+
+4. `Через nano меняю порт с 80 на 81, сохраняю. Перезагружаю Nginx и проверяю`
+
+```
+root@1654c7f7fe27:/# nano /etc/nginx/conf.d/default.conf
+root@1654c7f7fe27:/# nginx -s reload
+2025/05/18 18:40:20 [notice] 310#310: signal process started
+root@1654c7f7fe27:/# curl http://127.0.0.1:80
+curl: (7) Failed to connect to 127.0.0.1 port 80: Connection refused
+root@1654c7f7fe27:/# curl http://127.0.0.1:81
+<html>
+<head>
+Hey, Netology
+</head>
+<body>
+<h1>I will be DevOps Engineer!</h1>
+</body>
+</html>
+root@1654c7f7fe27:/# 
+```
+
+
+5. `Проверка состояния`
+
+```
+alexey@dell:~/virt_docker_compose/custom-nginx$ ss -tlpn | grep 127.0.0.1:8081
+nginx-t2
+curl -v http://127.0.0.1:8081LISTEN  0       4096              127.0.0.1:8081         0.0.0.0:*              
+alexey@dell:~/virt_docker_compose/custom-nginx$ docker port custom-nginx-t2
+80/tcp -> 127.0.0.1:8081
+alexey@dell:~/virt_docker_compose/custom-nginx$ curl -v http://127.0.0.1:8081
+*   Trying 127.0.0.1:8081...
+* TCP_NODELAY set
+* Connected to 127.0.0.1 (127.0.0.1) port 8081 (#0)
+> GET / HTTP/1.1
+> Host: 127.0.0.1:8081
+> User-Agent: curl/7.68.0
+> Accept: */*
+> 
+* Recv failure: Соединение разорвано другой стороной
+* Closing connection 0
+curl: (56) Recv failure: Соединение разорвано другой стороной
+```
+
+6. `Удаление без остановки`
+
+```alexey@dell:~/virt_docker_compose/custom-nginx$ docker rm -f custom-nginx-t2
+custom-nginx-t2
+```
+![9](https://github.com/Foxbeerxxx/virt_docker_compose/blob/main/img/img9.png)
+
 
 ### Задание 4
 
