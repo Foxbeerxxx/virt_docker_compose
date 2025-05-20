@@ -291,3 +291,60 @@ Hey, Netology
 </body>
 </html>
 ```
+
+### Задание 5
+
+
+1. `Создание директории и файлов`
+```
+mkdir -p /tmp/netology/docker/task5 && cd /tmp/netology/docker/task5
+
+# compose.yaml
+
+cat > compose.yaml <<EOF
+ version: "3"
+ services:
+   portainer:
+     network_mode: host
+     image: portainer/portainer-ce:latest
+     volumes:
+       - /var/run/docker.sock:/var/run/docker.sock
+ EOF
+
+
+#docker-compose.yaml
+
+cat > docker-compose.yaml <<EOF
+version: "3"
+services:
+  registry:
+    image: registry:2
+    ports:
+      - "5000:5000"
+EOF
+
+```
+2. `Запуск docker compose up -d`
+
+```
+
+Был запущен compose.yaml, потому что Docker Compose v2+ по умолчанию ищет файлы в порядке приоритета.
+1)compose.yaml (новый стандарт)
+2)docker-compose.yaml (старый формат)
+ 
+```
+3. `Чтобы запустить оба сервиса (portainer и registry) в одном проекте, можно использовать include`
+
+```
+cat > compose.yaml <<EOF
+version: "3.8"
+include:
+  - docker-compose.yaml
+services:
+  portainer:
+    network_mode: host
+    image: portainer/portainer-ce:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+EOF
+```
