@@ -348,3 +348,34 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
 EOF
 ```
+
+4. `Запускаем`
+![12](https://github.com/Foxbeerxxx/virt_docker_compose/blob/main/img/img12.png)
+
+![13](https://github.com/Foxbeerxxx/virt_docker_compose/blob/main/img/img13.png)
+
+5. `Настраиваем portainer`
+![14](https://github.com/Foxbeerxxx/virt_docker_compose/blob/main/img/img14.png)
+
+6. `Добавляем компоуз при сохранеении дает ошибку, так как у меня уже видимо есть сервисы на этом порту.`
+![16](https://github.com/Foxbeerxxx/virt_docker_compose/blob/main/img/img16.png)
+
+![17](https://github.com/Foxbeerxxx/virt_docker_compose/blob/main/img/img17.png)
+
+7. `Удаление compose.yaml и повторный запуск`
+```
+alexey@dell:/tmp/netology/docker/task5$ rm compose.yaml
+alexey@dell:/tmp/netology/docker/task5$ docker compose up -d
+[+] Building 0.0s (0/0)                                                                                                                                                            
+WARN[0000] Found orphan containers ([task5-portainer-1]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up. 
+[+] Running 1/0
+ ✔ Container task5-registry-1  Running   
+
+ Суть проблемы:
+Docker Compose обнаружил "осиротевшие" контейнеры (например, portainer), которые были созданы из предыдущего compose.yaml, но теперь отсутствуют в текущем манифесте.
+
+```
+
+![18](https://github.com/Foxbeerxxx/virt_docker_compose/blob/main/img/img18.png)
+
+7. `Ну и в конце docker compose down`
